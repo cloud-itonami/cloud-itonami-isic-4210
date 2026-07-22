@@ -11,7 +11,7 @@
   fabricate one, and the governor holds if it tries.
 
   Coverage is reported HONESTLY (see `coverage`); this is a STARTING
-  catalog (JPN/USA/DEU), not a from-scratch survey of all ~194
+  catalog (JPN/USA/DEU/GBR), not a from-scratch survey of all ~194
   jurisdictions. Extending coverage is additive: add one map to `catalog`,
   cite a real source, done -- never invent a jurisdiction's requirements
   to make coverage look bigger.
@@ -28,8 +28,13 @@
   or a railway. Railway-specific technical/track-safety-standard regimes
   (e.g. USA: FRA Track Safety Standards, 49 CFR Part 213, and Roadway
   Worker Protection, 49 CFR Part 214; Japan: 鉄道に関する技術上の基準を
-  定める省令) are real but are OUT OF SCOPE for this R0 catalog -- a
-  documented future extension, never fabricated into this slice.
+  定める省令; United Kingdom: the Railways and Other Guided Transport
+  Systems (Safety) Regulations 2006, S.I. 2006/599 ('ROGS' -- train/
+  infrastructure-manager safety-management-system and safety-
+  certificate/authorisation duties, enforced by the Office of Rail and
+  Road (ORR), confirmed via ORR's own published 'A Guide to ROGS' and
+  ROGS reg. 3's text) are real but are OUT OF SCOPE for this R0 catalog
+  -- a documented future extension, never fabricated into this slice.
 
   `:threshold-model` mirrors the SAME honest quantitative/qualitative
   split `construction.facts`/`demolition.facts` established, applied here
@@ -46,17 +51,25 @@
                      SLA -- see the USA entry's `:threshold-note` for the
                      honest translation). `notification-lead-insufficient?`
                      can independently recompute a HARD hold from this.
-    :qualitative  -- the law imposes a documented duty (a traffic-control
-                     order before work affecting road traffic; a prior
-                     notice for larger construction sites) with NO fixed
-                     EU-wide numeric lead-time (Germany/EU). This actor
-                     does NOT invent a day/hour-count to make this
-                     jurisdiction look automatable -- `notification-lead-
-                     insufficient?` returns `:qualitative` and the Road-
-                     Rail Governor's permanent high-stakes gate on
-                     `:schedule-construction-operation` (see `roadrail.
-                     governor` ns docstring) routes the decision to a
-                     human every time regardless.
+    :qualitative  -- either (a) the law imposes a documented duty (a
+                     traffic-control order before work affecting road
+                     traffic; a prior notice for larger construction
+                     sites) with NO fixed EU-wide numeric lead-time
+                     (Germany/EU), or (b) the law DOES fix a real minimum
+                     but denominated in a unit this actor's bright-line
+                     hour-based check cannot honestly convert without
+                     inventing an assumption the statute itself does not
+                     make (the United Kingdom's NRSWA 1991 s.55(1) '7
+                     working days' minimum -- see the GBR entry's
+                     `:threshold-note` for why this is NOT the same as
+                     Japan's 7 CALENDAR days). Either way this actor does
+                     NOT invent a day/hour-count to make the jurisdiction
+                     look automatable -- `notification-lead-insufficient?`
+                     returns `:qualitative` and the Road-Rail Governor's
+                     permanent high-stakes gate on `:schedule-
+                     construction-operation` (see `roadrail.governor` ns
+                     docstring) routes the decision to a human every time
+                     regardless.
 
   DEU is used as the EU-jurisdiction proxy, the SAME convention
   `construction.facts`/`demolition.facts`/`aerospace.facts` established --
@@ -68,7 +81,9 @@
 
   All citations below were verified against primary sources (e-Gov 法令
   検索 for Japanese statutes, eCFR/osha.gov for US federal regulations,
-  gesetze-im-internet.de/EUR-Lex for German/EU law) before being written
+  gesetze-im-internet.de/EUR-Lex for German/EU law, legislation.gov.uk
+  for UK primary/secondary legislation and orr.gov.uk for confirming the
+  Office of Rail and Road's ROGS enforcement role) before being written
   here -- none is recalled from memory alone without a source check."
   )
 
@@ -116,7 +131,20 @@
           :traffic-control-basis "Straßenverkehrs-Ordnung (StVO) §45 Abs.6 -- vor Beginn von Arbeiten, die den Straßenverkehr beeinträchtigen, hat der Bauunternehmer unter Vorlage eines Verkehrszeichenplans eine Anordnung der zuständigen Behörde einzuholen, wie die Arbeitsstelle abzusperren und zu kennzeichnen ist und ob und wie der Verkehr eingeschränkt, geleitet und geregelt werden soll (bei Fahrbahnverengung auf Vorrangstraßen gilt die Zustimmung als erteilt, wenn die Behörde nicht innerhalb einer Woche nach Eingang des Antrags widerspricht)."
           :traffic-control-provenance "https://www.gesetze-im-internet.de/stvo_2013/__45.html"
           :permit-basis "Straßenrecht ist grundsätzlich Ländersache (state-level competence in Germany, the same layering `construction.facts`/`demolition.facts` use for their own DEU building-permit citations) -- road-opening/occupancy permits (Sondernutzungserlaubnis) are issued under the respective Land's Straßengesetz, with StVO §45 governing the SEPARATE traffic-control order needed once work begins."
-          :permit-provenance "https://www.gesetze-im-internet.de/stvo_2013/__45.html"}})
+          :permit-provenance "https://www.gesetze-im-internet.de/stvo_2013/__45.html"}
+   "GBR" {:name "United Kingdom"
+          :owner-authority "Department for Transport (DfT)／National Highways (the strategic highways company for England's motorway and trunk-road network, named in Traffic Management Act 2004 s.33(1)(a))／local highway authorities in England and, for Wales, local highway authorities acting via the Welsh Ministers (street/highway authorities under NRSWA 1991 Part 3 and TMA 2004 Part 3)／Health and Safety Executive (HSE) (enforces the Construction (Design and Management) Regulations 2015, made under the Health and Safety at Work etc. Act 1974)"
+          :utility-locate-basis "The Construction (Design and Management) Regulations 2015 (S.I. 2015/51), regulation 25(4) (\"Energy distribution installations\"): 'Construction work which is liable to create a risk to health or safety from an underground service, or from damage to or disturbance of it, must not be carried out unless suitable and sufficient steps (including any steps required by this regulation) have been taken to prevent the risk, so far as is reasonably practicable.' This regulation's geographical extent is U.K.-wide (England, Wales, Scotland and Northern Ireland alike), unlike the England & Wales-only citations below."
+          :utility-locate-provenance "https://www.legislation.gov.uk/uksi/2015/51/regulation/25"
+          :traffic-control-basis "New Roads and Street Works Act 1991 (c. 22), section 65 (\"Safety measures\"): an undertaker executing street works shall secure that any part of the street which is broken up or open, or is obstructed by plant or materials used or deposited in connection with the works, is adequately guarded and lit, and that such traffic signs are placed and maintained, and where necessary operated, as are reasonably required for the guidance or direction of persons using the street, having regard, in particular, to the needs of people with a disability."
+          :traffic-control-provenance "https://www.legislation.gov.uk/ukpga/1991/22/section/65"
+          :traffic-control-note "Section 65's own geographical-extent marker on legislation.gov.uk is 'E+W' -- England & Wales only. Scotland and Northern Ireland have their own separate statutory street/road-works-safety regimes; this R0 slice does not independently verify or cite them, and never assumes they are textually identical to the England & Wales provision above -- the same honest sub-national layering `construction.facts`/`demolition.facts` apply to their own USA state-vs-federal and DEU Land-vs-EU citations, applied here to the UK's four-nation structure."
+          :threshold-model :qualitative
+          :notification-lead-hours nil
+          :threshold-note "NRSWA 1991 s.55(1) (\"Notice of starting date of works\", also E+W-extent) DOES set a real fixed statutory minimum: 'An undertaker proposing to begin to execute street works involving breaking up or opening the street... shall give not less than 7 working days' notice (or such other notice as may be prescribed) to the street authority...' Unlike Japan's 168-hour/7-CALENDAR-day minimum and the USA's 24-hour minimum -- both of which convert cleanly to a fixed hour count -- the UK's minimum is denominated in WORKING days, a quantity that excludes weekends and public holidays and so has no single fixed hour-count without inventing an undisclosed assumption about which calendar days the notice period spans. Re-expressing '7 working days' as a flat 168 hours (naively mirroring Japan's calendar-day conversion) would understate the true minimum whenever the notice period spans a weekend or bank holiday -- this actor never fabricates that false equivalence. `:threshold-model` is therefore honestly `:qualitative` here, the same value as the DEU/EU entry, even though (unlike DEU/EU) a fixed number IS in the statute -- it is simply not expressible as a bright-line hour count without a calendar assumption the statute itself does not make. `notification-lead-insufficient?` returns `:qualitative` for GBR, and the Road-Rail Governor's permanent high-stakes gate on `:schedule-construction-operation` (ALWAYS escalates to a human, matching `roadrail.governor`'s ns docstring) is what actually protects this jurisdiction, not a numeric hard check."
+          :permit-basis "Traffic Management Act 2004 (c. 18), Part 3 (\"Permit Schemes\"), ss.32-33: a permit scheme is 'a scheme which is designed to control the carrying out of specified works in specified streets in a specified area' and may include provision 'for or in connection with requiring a permit to be obtained before specified works are carried out' (s.32); a permit scheme may be prepared by 'a strategic highways company, a local highway authority in England, or such a company or authority acting together' (s.33(1)), or, for Wales, by a local highway authority submitting to the Welsh Ministers (s.33(1A))."
+          :permit-provenance "https://www.legislation.gov.uk/ukpga/2004/18/section/32"
+          :permit-note "Part 3 (this citation) has geographical extent England & Wales only, the same 'E+W' marker as the traffic-control citation above. Scotland and Northern Ireland have their own separate road-works-permitting arrangements, not independently verified/cited in this R0 slice."}})
 
 (defn spec-basis
   "The jurisdiction's requirement map, or nil -- nil means NO spec-basis,

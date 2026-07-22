@@ -16,6 +16,15 @@
   (is (= :qualitative (:threshold-model (facts/spec-basis "DEU"))))
   (is (nil? (:notification-lead-hours (facts/spec-basis "DEU")))))
 
+(deftest gbr-has-a-spec-basis
+  (is (some? (facts/spec-basis "GBR")))
+  (is (string? (:utility-locate-provenance (facts/spec-basis "GBR"))))
+  ;; GBR's real statutory minimum (NRSWA 1991 s.55(1), 7 WORKING days) is
+  ;; honestly modeled as :qualitative -- not converted to a fabricated
+  ;; hour count -- see the catalog entry's :threshold-note.
+  (is (= :qualitative (:threshold-model (facts/spec-basis "GBR"))))
+  (is (nil? (:notification-lead-hours (facts/spec-basis "GBR")))))
+
 (deftest unknown-jurisdiction-has-no-fabricated-spec-basis
   (is (nil? (facts/spec-basis "ATL"))))
 
@@ -24,6 +33,13 @@
     (is (= 2 (:covered report)))
     (is (= ["ATL"] (:missing-jurisdictions report)))
     (is (= ["JPN" "USA"] (:covered-jurisdictions report)))))
+
+(deftest catalog-now-includes-gbr-as-a-fourth-jurisdiction
+  (is (= 4 (count facts/catalog)))
+  (is (contains? facts/catalog "GBR"))
+  (let [report (facts/coverage)]
+    (is (= 4 (:covered report)))
+    (is (= ["DEU" "GBR" "JPN" "USA"] (:covered-jurisdictions report)))))
 
 ;; ----------------------------- notification-lead-insufficient? -----------------------------
 
@@ -39,6 +55,10 @@
 (deftest deu-never-gets-a-fabricated-true-false
   (is (= :qualitative (facts/notification-lead-insufficient? "DEU" {:notification-lead-hours-actual 1000})))
   (is (= :qualitative (facts/notification-lead-insufficient? "DEU" {:notification-lead-hours-actual 0}))))
+
+(deftest gbr-never-gets-a-fabricated-true-false
+  (is (= :qualitative (facts/notification-lead-insufficient? "GBR" {:notification-lead-hours-actual 1000})))
+  (is (= :qualitative (facts/notification-lead-insufficient? "GBR" {:notification-lead-hours-actual 0}))))
 
 (deftest unknown-jurisdiction-returns-nil-not-a-guess
   (is (nil? (facts/notification-lead-insufficient? "ATL" {:notification-lead-hours-actual 1000}))))
@@ -72,6 +92,19 @@
     (is (re-find #"eur-lex\.europa\.eu" (:utility-locate-provenance sb)))
     (is (re-find #"StVO|Straßenverkehrs-Ordnung" (:traffic-control-basis sb)))
     (is (re-find #"gesetze-im-internet\.de" (:traffic-control-provenance sb)))))
+
+(deftest gbr-cites-real-cdm-nrswa-and-tma-law
+  (let [sb (facts/spec-basis "GBR")]
+    (is (re-find #"Construction \(Design and Management\) Regulations 2015" (:utility-locate-basis sb)))
+    (is (re-find #"25\(4\)" (:utility-locate-basis sb)))
+    (is (re-find #"legislation\.gov\.uk" (:utility-locate-provenance sb)))
+    (is (re-find #"New Roads and Street Works Act 1991" (:traffic-control-basis sb)))
+    (is (re-find #"section 65|Safety measures" (:traffic-control-basis sb)))
+    (is (re-find #"legislation\.gov\.uk" (:traffic-control-provenance sb)))
+    (is (re-find #"E\+W" (:traffic-control-note sb)) "honestly discloses England & Wales-only extent")
+    (is (re-find #"Traffic Management Act 2004" (:permit-basis sb)))
+    (is (re-find #"legislation\.gov\.uk" (:permit-provenance sb)))
+    (is (re-find #"7 working days" (:threshold-note sb)) "cites the real statutory minimum without fabricating an hour conversion")))
 
 (deftest uncovered-jurisdiction-has-no-fabricated-catalog-entry
   (is (nil? (facts/spec-basis "ATL"))))
