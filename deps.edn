@@ -14,7 +14,11 @@
  ;; `kotoba-lang/robotics` or `kotoba-lang/physics-2d`: it never simulates
  ;; or dispatches heavy-equipment/robot actions, only proposes, schedules,
  ;; flags and logs, all governor- and human-gated (see README).
- :deps {io.github.com-junkawasaki/langgraph-clj
+ :deps {
+        io.github.kotoba-lang/jp-go-digital-design-system
+        {:git/url "https://github.com/kotoba-lang/jp-go-digital-design-system"
+         :git/sha "83db99546eabc53613ae826ea41d1533a3c574af"}
+io.github.com-junkawasaki/langgraph-clj
         {:local/root "../../kotoba-lang/langgraph"}
         io.github.kotoba-lang/langchain-store
         {:local/root "../../kotoba-lang/langchain-store"}}
