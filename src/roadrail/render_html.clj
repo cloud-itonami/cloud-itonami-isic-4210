@@ -8,7 +8,8 @@
   identical across reruns. Scenario is adapted from `roadrail.sim`
   (verified against the real seed data / governor rules first, see
   `run-demo!` docstring below), NOT hand-typed HTML."
-  (:require [clojure.string :as str]
+  (:require [jp-go-dds.skin]
+            [clojure.string :as str]
             [roadrail.store :as store]
             [roadrail.operation :as op]
             [roadrail.phase :as phase]
@@ -193,7 +194,9 @@ p.note { color: #666; font-size: 13px; margin: 6px 0 14px; }")
     (str
      "<!doctype html>\n<html lang=\"ja\">\n<head>\n<meta charset=\"utf-8\">\n"
      "<title>roadrail.render-html -- Road &amp; Rail Construction Governor operator console</title>\n"
-     "<style>\n" css "\n</style>\n</head>\n<body>\n"
+     "<style>"
+   (jp-go-dds.skin/dds+skin)
+   "</style>\n</head>\n<body>\n"
      "<header class=\"bar\"><h1>Road &amp; Rail Construction Governor -- Operator Console</h1>"
      "<span class=\"badge\">ISIC 4210 &middot; phase " phase/default-phase
      " (" (:label ph3) ") &middot; coordination-only, effect always :propose</span></header>\n<main>\n"
