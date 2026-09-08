@@ -9,7 +9,7 @@
   (verified against the real seed data / governor rules first, see
   `run-demo!` docstring below), NOT hand-typed HTML."
   (:require [jp-go-dds.skin]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [roadrail.store :as store]
             [roadrail.operation :as op]
             [roadrail.phase :as phase]
