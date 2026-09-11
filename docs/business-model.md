@@ -6,7 +6,7 @@
 > business models; fleet actors carry this generated baseline. Unit-economics
 > figures below are illustrative and **not yet measured at fleet scale** — a
 > shape, not a reported metric. Regenerate with
-> `nbb scripts/gen-actor-business-model.cljs <repo>` in `kotoba-lang/industry`.
+> `kbb --backend sci scripts/gen-actor-business-model.cljk <repo>` in `kotoba-lang/industry`.
 >
 > **Exception — `## Revenue` is no longer generated (2026-08-10).** That
 > section was replaced by hand with directly measured competitor pricing and a
