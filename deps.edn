@@ -31,11 +31,11 @@ io.github.com-junkawasaki/langgraph-clj
   ;; io.github.com-junkawasaki/langchain-clj. langgraph declares the same
   ;; library as io.github.kotoba-lang/langchain, so the entry matched no
   ;; node in the resolved tree and never reached the classpath -- verified
-  ;; with `clojure -Stree`/-Spath, unchanged before and after removal.
+  ;; with `kbb -Stree`/-Spath, unchanged before and after removal.
   :dev {}
-  ;; clojure -M:dev:run  -> drive the demo through one OperationActor
+  ;; kbb -M:dev:run  -> drive the demo through one OperationActor
   :run {:main-opts ["-m" "roadrail.sim"]}
-  ;; clojure -M:dev:render-html -> build-time-generate docs/samples/operator-console.html
+  ;; kbb -M:dev:render-html -> build-time-generate docs/samples/operator-console.html
   ;; through the real actor (flagship checklist item 2, ADR-2607189300).
   :render-html {:main-opts ["-m" "roadrail.render-html"]}
   :test {:extra-paths ["test"]
