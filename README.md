@@ -86,7 +86,7 @@ coordination-only authority as described above.
 | `:flag-safety-concern` | surface a structural / traffic-control / utility-strike concern | Drafts a safety-concern flag; ALWAYS escalates to a human, unconditionally. Once approved, `roadrail.notify` sends the notice (mail + phone) to the site's licensed-engineer/site-supervisor/utility-authority contact roster. |
 | `:order-supplies` | aggregate/asphalt/rail/equipment procurement proposal | Drafts a supply-order proposal. Escalates above a cost threshold or below the confidence floor; may auto-commit at phase 3 otherwise. |
 
-**Legal basis is data, not code** -- `src/roadrail/facts.cljc`'s
+**Legal basis is data, not code** -- `src/roadrail/facts.cljk`'s
 `catalog` is the per-jurisdiction EDN source-of-truth the governor checks
 every `:schedule-construction-operation` proposal against (JPN/USA/DEU
 seeded; DEU stands in for the EU, the same convention
