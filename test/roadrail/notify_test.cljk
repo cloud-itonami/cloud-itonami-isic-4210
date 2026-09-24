@@ -1,5 +1,5 @@
 (ns roadrail.notify-test
-  (:require [clojure.test :refer [deftest is]]
+  (:require [kotoba.test :refer [deftest is]]
             [roadrail.notify :as notify]))
 
 (deftest mock-notifier-records-mail-and-phone-sends
