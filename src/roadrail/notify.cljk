@@ -24,7 +24,7 @@
   time `roadrail.operation`'s `:commit` node calls this, a human has
   already reviewed the concern. This namespace builds/sends the message;
   it does NOT decide whether to send one."
-  (:require [kotoba.lang.text :as str]))
+  (:require [kotoba.http.form-urlencoded :as form-urlencoded] [kotoba.bytes :as kbytes] [kotoba.lang.text :as str]))
 
 (defprotocol Notifier
   (-send-mail! [n msg] "msg: {:to :subject :body} -> {:status :channel :to ..}")
@@ -130,8 +130,8 @@
 
 #?(:clj
    (defn- form-encode [m]
-     (str/join "&" (map (fn [[k v]] (str (java.net.URLEncoder/encode (name k) "UTF-8") "="
-                                        (java.net.URLEncoder/encode (str v) "UTF-8")))
+     (str/join "&" (map (fn [[k v]] (str (form-urlencoded/form-encode (name k)) "="
+                                        (form-urlencoded/form-encode (str v))))
                         m))))
 
 #?(:clj
@@ -150,8 +150,8 @@
 
 #?(:clj
    (defn- basic-auth-header [account-sid auth-token]
-     (str "Basic " (.encodeToString (java.util.Base64/getEncoder)
-                                    (.getBytes (str account-sid ":" auth-token) "UTF-8")))))
+     (str "Basic " (kbytes/base64-encode
+                                    (kbytes/utf8-bytes (str account-sid ":" auth-token))))))
 
 #?(:clj
    (defrecord TwilioVoiceNotifier [from http-fn account-sid auth-token]
